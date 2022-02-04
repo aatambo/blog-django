@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+	Posts | Add
+{% endblock title %}
+{% block content %}
+<center>
+<div class="col-md-8 border border-warning rounded bg-dark text-warning" style="padding: 10px;">
+	<h5>Post Today!
+	<form method="post" class="form-group mt-3">
+		{% csrf_token %}
+		{{ form|crispy }}
+		<button class="btn btn-sm btn-outline-warning mt-2" type="submit">Submit</button>
+	</form>
+</div>
+</center>
+{% endblock content %}

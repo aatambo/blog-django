@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+	Post - Detail
+{% endblock title %}
+{% block content %}
+	<div class="border border-dark rounded bg-dark text-warning" style="padding: 10px;">
+		<div class="mb-2">
+			<h5>{{ post.title}}</h5>
+			<p class="card-text">{{ post.body }}</p>
+			<p class="card-text ">
+				<a class="mr-2" href="{% url 'posts' post.author.username %}">{{ post.author }}</a> |
+				<a class="mr-2" href="{% url 'profile-user' post.author.username %}">profile</a>
+			</p>
+		</div>
+		{% if post.author == user %}
+			<div class="btn-group"  role="group">
+				<a class="btn btn-secondary btn-sm" href="{% url 'post-update' post.id %}">Update</a>
+				<a class="btn btn-danger btn-sm" href="{% url 'post-delete' post.id %}">Delete</a>
+			</div>
+		{% endif %}
+		<div class="border-top border-warning mt-3">
+			<p class="card-text">Add a new comment</p>
+			<form method="post" class="form-group mt-3">
+				{% csrf_token %}
+				{{ form|crispy }}
+				<button class="btn btn-sm btn-outline-warning mt-2" type="submit">Submit</button>
+			</form>
+		</div>
+		<div class="border-top border-warning mt-3">
+			{% with comments.count as total %}
+			<h5>[{{total}} comment{{ total|pluralize }}]</h5>
+		{% endwith %}
+		{% for com in comments %}
+			<div class="bg-warning border-warning rounded mb-1" style="padding: 10px;">
+				<p class="card-text text-dark">
+					<a class="" href="{% url 'comments' com.owner.username %}">{{ com.owner }}</a> | 
+					<a class="mr-2" href="{% url 'profile-user' com.owner.username %}">profile</a>
+				</p>
+				<p class="card-text text-dark">{{com.comment}}</p>
+				<p class="text-muted"><small>{{com.created}} | {{com.updated}}[updated]</small></p>
+				{% if com.owner == user %}
+					<a class="btn btn-secondary btn-sm mr-1" href="{% url 'comment-update' com.pk %}">Update</a>
+				{% endif %}
+			</div>
+			{% empty %}
+			<p class="text-muted">No comments Yet</p>
+		{% endfor %}
+	</div>
+{% endblock content %}

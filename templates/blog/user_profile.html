@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}
+  User | Profile
+{% endblock title %}
+{% block content %}
+  <div class="col-md-6">
+    <div class="card mb-3 bg-dark text-warning">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="{{ user.profile.image.url }}" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <p class="card-text">Username ~ {{ user.username }}</p>
+            <p class="card-text">First Name ~ {{ user.first_name }}</p>
+            <p class="card-text">Last Name ~ {{ user.last_name }}</p>
+            <p class="card-text">Email(primary) ~ {{ user.email }}</p>
+            <p class="card-text">Email ~ {{ user.profile.email }}</p>
+            <p class="card-text">Bio ~ {{ user.profile.bio }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
